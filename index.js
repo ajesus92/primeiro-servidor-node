@@ -1,9 +1,13 @@
 const express = require('express'),
-  app = express()
+  app = express(),
+  rotasProdutos = require('./routes/rotasProdutos'),
+  rotasSobre = require('./routes/rotasSobre')
+  port = 3000
 
 app.get('/', (req, res) => res.send('<h3>Vocês está na página inicial</h3>'))
-app.get('/sobre', (req, res) => res.send('<h3>Vocês está na página sobre</h3>'))
-app.get('/produto/:id/:cor?', (req, res) => res.send(`<h3>Vocês está na página do produto de id ${req.params.id} e cor ${req.params.cor}</h3>`))
+app.get('/produto', (req, res) => res.send('<h3>Vocês está na página Produto</h3>'))
+app.use('/produtos', rotasProdutos)
+app.use('/sobre', rotasSobre)
 app.get('/usuarios/:nome?', (req, res) => {
   const { nome } = req.params
   res.send(nome ? `Página do usuário ${nome}` : 'Página de usuários')
@@ -30,4 +34,4 @@ app.get('/array', (req, res) => {
   ])
 })
 
-app.listen(3000, () => console.log('Servidor iniciado'))
+app.listen(port, () => console.log('Servidor iniciado'))
